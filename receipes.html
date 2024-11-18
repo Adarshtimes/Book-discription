@@ -1,0 +1,82 @@
+{% load crispy_forms_tags %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/darkly/bootstrap.css">
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>jmjk</title>
+</head>
+<body>
+ <div class="container mt-5">
+   <form class="col-6 mx-auto card p-3 shadow-lg"method="post" action = "{% url 'receipes' %}"enctype="multipart/form-data" >
+    {% csrf_token %}
+    <h2>BOOK RECOMMENDATION</h2>  
+     <div class="mb-3">
+           <label for="exampleInputEmail1 " class="form-label">Book name</label>
+           <input name="Book_name" required type="text"   class="form-control">
+       </div>
+       <div class="mb-3">
+           <label for="exampleInputPassword1" class="form-label">Book descreption</label>
+           <textarea class="form-control"name="Book_description" required></textarea>
+       </div>
+       <div class="mb-3">
+           <label for="exampleInputPassword1" class="form-label">Book image</label>   
+
+           <input name=" Book_image"type="file" class="form-control">
+       </div>
+       <button type="submit" class="btn btn-primary">Add Book</button>
+   </form>
+   {{receipes | crispy}}
+   <div class="mt-5">
+    <div class="mx-auto col-6">
+      <form>
+      <div class="mb-3">
+        <label for="exampleInputEmail1 " class="form-label">Search Book</label>
+        <input name="search" type="text"   class="form-control">
+        
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+     </form>
+    </div>
+   </div>
+
+   <table class="table mt-5">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Book name</th>
+        <th scope="col">Book descreption</th>
+        <th scope="col">image</th>
+        <th scope="col">action</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for receipe in receipes %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{receipe.Book_name}}</td>
+        <td>{{receipe.Book_description}}</td>
+       
+        <!-- <td>{{receipe.receipe_image}}</td> -->
+        <td>
+            {% if receipe.Book_image %}
+                 <img src="{{ receipe.Book_image.url }}" style="height:100px" alt="{{ receipe.Book_name }}">
+            {% else %}
+                 <p>No image available</p>
+            {% endif %}
+        </td>
+        <td>
+          <a href="delete-receipe/{{receipe.id}}/" class="btn btn-danger m-2" >delete </a>
+          <a href="{% url 'update_receipe' receipe.id%}" class="btn btn-success" >update</a>
+          </td>
+      </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+</div>   
+</body>
+</html>
+

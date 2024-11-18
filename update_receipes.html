@@ -1,0 +1,36 @@
+{% load crispy_forms_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" type="text/css" href="https://bootswatch.com/5/vapor/bootstrap.min.css">
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>update receipe</title>
+</head>
+<body>
+ <div class="container mt-5">
+   <form class="col-6 mx-auto card p-3 shadow-lg"method="post" action = "{% url 'update_receipe' receipe.id %}"enctype="multipart/form-data" >
+    {% csrf_token %}
+    <h2>upadate receipe</h2>  
+     <div class="mb-3">
+           <label for="Book_name " class="form-label">Book name</label>
+           <input name="Book_name"value="{{receipe.Book_name}}" required type="text"   class="form-control" id="Book_name">
+       </div>
+       <div class="mb-3">
+           <label for="Book_description" class="form-label">Book descreption</label>
+           <textarea class="form-control"name="Book_description" required id="Book_description">{{receipe.Book_description}}</textarea>
+       </div>
+       <div class="mb-3">
+           <label for="Book_image" class="form-label">Book image</label>   
+           <input name=" Book_image"type="file" class="form-control" id="Book_image">
+       </div>
+       <button type="submit" class="btn btn-primary">update Receipe</button>
+   </form>
+   <!-- {{receipes | crispy}} -->
+
+ 
+</div>   
+</body>
+</html>
+
